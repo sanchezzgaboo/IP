@@ -60,9 +60,8 @@ def buscar_creador_por_nombre(nombre: str, c1: dict, c2: dict, c3: dict, c4: dic
             Retorna None si no hay ningún creador con ese nombre. Si dos creadores
             o más tienen el mismo nombre, retorna el primero encontrado.
     """
-    # TODO1: Implemente la función tal y como se describe en la documentación.
     creador = {}
-    if(c1["nombre"].lower() == nombre.lower()):
+    if(c1["nombre"].lower() == nombre.lower()): 
         creador = c1
     if(c2["nombre"].lower() == nombre.lower()):
         creador = c2
@@ -89,7 +88,6 @@ def filtrar_creadores_por_categoria(categoria: str, c1: dict, c2: dict, c3: dict
             separados por comas. Retorna None si no hay ningún creador que haga
             parte de la categoría de interés ingresada.
     """
-    # TODO2: Implemente la función tal y como se describe en la documentación.
     resultados = ""
     contador_de_creadores = 0
     if(categoria.lower() in c1["categorias"].lower()):
@@ -133,7 +131,6 @@ def calcular_promedio_vistas(c1: dict, c2: dict, c3: dict, c4: dict) -> float:
         float: Promedio de vistas de todos los creadores de contenido dados,
             redondeado a dos cifras decimales.
     """
-    # TODO3: Implemente la función tal y como se describe en la documentación.
     return round((c1["vistas"] + c2["vistas"] + c3["vistas"] +c4["vistas"]) / 4, 2)
 
 
@@ -153,30 +150,38 @@ def filtrar_creadores_por_vistas(minimo_vistas: int, c1: dict, c2: dict, c3: dic
             de vistas ingresado, separados por comas. Retorna el mensaje "Ninguno"
             si ningún creador de contenido supera el umbral.
     """
-    # TODO4: Implemente la función tal y como se describe en la documentación.
     resultados = ""
     contador_de_creadores = 0
     if(c1["vistas"]>=minimo_vistas):
-        resultados += c1["nombre"]
+        resultados += f"{c1['nombre']}"
         contador_de_creadores += 1
     if(c2["vistas"]>=minimo_vistas):
         if(contador_de_creadores == 0):
             resultados += f"{c2['nombre']}"
         else:
             resultados += f", {c2['nombre']}"
+
         contador_de_creadores += 1
-        resultados += c2["nombre"]
+
     if(c3["vistas"]>=minimo_vistas):
         if(contador_de_creadores == 0):
             resultados += f"{c3['nombre']}"
+            print(resultados)
+
         else:
             resultados += f", {c3['nombre']}"
+            print(resultados)
+
         contador_de_creadores += 1
     if(c4["vistas"]>=minimo_vistas):
         if(contador_de_creadores == 0):
             resultados += f"{c4['nombre']}"
+            print(resultados)
+
         else:
             resultados += f", {c4['nombre']}"
+            print(resultados)
+
         contador_de_creadores += 1
     if(contador_de_creadores == 0):
         resultados = "Ninguno"
@@ -195,11 +200,11 @@ def calcular_rating_creador(creador: dict) -> float:
         float: El rating del creador de contenido, redondeado a dos cifras
             decimales. Este valor se encuentra entre 0 y 100.
     """
-    # TODO5: Implemente la función tal y como se describe en la documentación.
     S_MAX = 600_000
     L_MAX = 100_000_000
     V_MAX = 100_000_000
-    return(round(((creador["seguidores"]/S_MAX)*0.5)+((creador["likes"]/L_MAX)*0.3)+((creador["vistas"]/V_MAX)*0.2), 2))
+    valor = ((creador["seguidores"]/S_MAX)*0.5)+((creador["likes"]/L_MAX)*0.3)+((creador["vistas"]/V_MAX)*0.2)
+    return(round((valor, 2)))
 
 
 def calcular_puntaje_afinidad(creador: dict, categoria: str, minimo_rating: float, pais: str) -> float:
@@ -218,7 +223,6 @@ def calcular_puntaje_afinidad(creador: dict, categoria: str, minimo_rating: floa
         float: El puntaje de afinidad que tiene un creador con un usuario,
             redondeado a dos cifras decimales.
     """
-    # TODO6: Implemente la función tal y como se describe en la documentación.
     puntaje = 0
     if(creador["categorias"] == categoria):
         puntaje += 3
@@ -255,24 +259,23 @@ def buscar_creador_favorito(categoria: str, rating: float, pais: str, c1: dict, 
             información del que tenga el nombre alfabéticamente anterior/menor 
             (considerando el orden de sus caracteres en el abecedario). 
     """
-    # TODO7: Implemente la función tal y como se describe en la documentación.
     afinidad1 = calcular_puntaje_afinidad(c1, categoria, rating, pais)
     afinidad2 = calcular_puntaje_afinidad(c2, categoria, rating, pais)
     afinidad3 = calcular_puntaje_afinidad(c3, categoria, rating, pais)
     afinidad4 = calcular_puntaje_afinidad(c4, categoria, rating, pais)
-    creador = {}
-    creador2 = {}
-    creador_nombre = ""
-    afinidad_mas_grande = afinidad1
-    creador = c1.copy()
+    creador = c1.copy() #Creador Actual
+    creador2 = {} #Creador Siguiente
+    afinidad_mas_grande = afinidad1 #Asumir que la afinidad mas grande es la primera
     if(afinidad_mas_grande < afinidad2):
-        afinidad_mas_grande = afinidad2
+        afinidad_mas_grande = afinidad2 #Si afinidad 1 es menor que la 2, se asigna la 2, ya que esta sería mas grande.
         creador = c2.copy()
     elif(afinidad_mas_grande == afinidad2):
         creador2 = c2.copy()
-        if(creador["nombre"].lower() < creador2["nombre"].lower()):
+        if(creador["nombre"].lower() < creador2["nombre"].lower()): 
+            #SI el nombre del primero es alfabeticamente menor, creador se mantiene.
             creador = creador
         else:
+            #En otro caso, el creador se decide que es el Segundo, ya que este seria el alfabeticamente menor
             creador = creador2.copy()
     if(afinidad_mas_grande < afinidad3):
         afinidad_mas_grande = afinidad3
@@ -292,7 +295,8 @@ def buscar_creador_favorito(categoria: str, rating: float, pais: str, c1: dict, 
             creador = creador
         else:
             creador = creador2.copy()
-    return(f"{creador['nombre']} con puntaje {afinidad_mas_grande}")
+    resultado = f"{creador['nombre']} con puntaje {afinidad_mas_grande}"
+    return(resultado)
 
 def calcular_anio(fecha: int) -> int:
     return fecha // 10000
@@ -303,6 +307,36 @@ def calcular_mes(fecha: int) -> int:
 def calcular_dia(fecha: int) -> int:
     return (fecha - (int(f"{fecha // 10000}_0000")) - (fecha - (int(f"{fecha // 10000}_0000"))) // 100 * 100)
 
+def calcular_fecha_exacta(fecha_de_referencia: int, creador: dict) -> dict:
+    diccionario_fechas = {}
+    diccionario_fechas["nombre"] = creador["nombre"]
+    
+    '''
+    Si el mes es negativo, restale 1 al año y calcula los meses correctos
+    '''
+    if(calcular_mes(fecha_de_referencia) - calcular_mes(creador["fecha_ultima_publicacion"])<0):
+        diccionario_fechas["anios"] = calcular_anio(fecha_de_referencia) - calcular_anio(creador["fecha_ultima_publicacion"]) - 1
+        diccionario_fechas["meses"] = calcular_mes(fecha_de_referencia) + 12 - calcular_mes(creador["fecha_ultima_publicacion"])
+    elif(calcular_mes(fecha_de_referencia) - calcular_mes(creador["fecha_ultima_publicacion"])>=0):
+        diccionario_fechas["anios"] = calcular_anio(fecha_de_referencia) - calcular_anio(creador["fecha_ultima_publicacion"])
+        diccionario_fechas["meses"] = calcular_mes(fecha_de_referencia) - calcular_mes(creador["fecha_ultima_publicacion"])
+    
+    '''
+    Si el dia es negativo, restale 1 al mes y calcula los días correctos, 
+    también toma en cuenta que algunos meses tienen 31 dias y otros 30
+    '''
+    if(calcular_dia(fecha_de_referencia) - calcular_dia(creador["fecha_ultima_publicacion"]) < 0):
+        diccionario_fechas["meses"] -= 1
+        if(calcular_mes(fecha_de_referencia) != 1 or calcular_mes(fecha_de_referencia) != 3 or calcular_mes(fecha_de_referencia) != 5 or calcular_mes(fecha_de_referencia) != 7 or calcular_mes(fecha_de_referencia) != 8 or \
+            calcular_mes(fecha_de_referencia) != 10 or calcular_mes(fecha_de_referencia) != 12):
+            diccionario_fechas["dias"] = (31 - calcular_dia(creador["fecha_ultima_publicacion"]) + calcular_dia(fecha_de_referencia))
+        else:
+            diccionario_fechas["dias"] = (30 - calcular_dia(creador["fecha_ultima_publicacion"]) + calcular_dia(fecha_de_referencia))
+    elif (calcular_dia(fecha_de_referencia) - calcular_dia(creador["fecha_ultima_publicacion"]) >= 0):
+        diccionario_fechas["dias"] = calcular_dia(fecha_de_referencia) - calcular_dia(creador["fecha_ultima_publicacion"])  
+    
+    return diccionario_fechas
+    
 
 
 def buscar_creador_inactivo(fecha_de_referencia: int, c1: dict, c2: dict, c3: dict, c4: dict) -> dict:
@@ -328,20 +362,16 @@ def buscar_creador_inactivo(fecha_de_referencia: int, c1: dict, c2: dict, c3: di
             Si la fecha ingresada es anterior a todas las fechas de última publicación,
             retorna None.
     """
-    # TODO8: Implemente la función tal y como se describe en la documentación.
-    # TIP: Puede usar una función auxiliar para calcular la cantidad de días
-    #      que han pasado entre dos fechas.
-
     año_c1 = fecha_de_referencia - c1["fecha_ultima_publicacion"]
     año_c2 = fecha_de_referencia - c2["fecha_ultima_publicacion"]
     año_c3 = fecha_de_referencia - c3["fecha_ultima_publicacion"]
     año_c4 = fecha_de_referencia - c4["fecha_ultima_publicacion"]
-    creador = {}
-    creador2 = {}
-    diccionario_fechas = {}
-    none = {"none": None}
-    creador = c1.copy()
-    año_mas_viejo = año_c1
+    creador = c1.copy() #Creador actual
+    creador2 = {} #Creador a Comparar
+    diccionario_de_retorno = {}
+    none = {"none": None} #Un diccionario que contiene None, utilizado para retornar 
+    año_mas_viejo = año_c1 #Asumir que el año mas viejo es el primero.
+    
     if(año_mas_viejo < año_c2):
         año_mas_viejo = año_c2
         creador = c2.copy()
@@ -351,6 +381,7 @@ def buscar_creador_inactivo(fecha_de_referencia: int, c1: dict, c2: dict, c3: di
             creador = creador
         else:
             creador = creador2.copy()
+            
     if(año_mas_viejo < año_c3):
         año_mas_viejo = año_c3
         creador = c3.copy()
@@ -360,6 +391,7 @@ def buscar_creador_inactivo(fecha_de_referencia: int, c1: dict, c2: dict, c3: di
             creador = creador
         else:
             creador = creador2.copy()
+            
     if(año_mas_viejo < año_c4):
         año_mas_viejo = año_c4
         creador = c4.copy()
@@ -369,37 +401,11 @@ def buscar_creador_inactivo(fecha_de_referencia: int, c1: dict, c2: dict, c3: di
             creador = creador
         else:
             creador = creador2.copy()
-    if( año_mas_viejo< 0):
-        diccionario_fechas = none.copy()
+            
+    if(año_mas_viejo<0):
+        diccionario_de_retorno = none.copy()
 
     else:
-        diccionario_fechas["nombre"] = creador["nombre"]
-        if(calcular_mes(fecha_de_referencia) - calcular_mes(creador["fecha_ultima_publicacion"])<0):
-            diccionario_fechas["anios"] = calcular_anio(fecha_de_referencia) - calcular_anio(creador["fecha_ultima_publicacion"]) - 1
-            diccionario_fechas["meses"] = calcular_mes(fecha_de_referencia) + 12 - calcular_mes(creador["fecha_ultima_publicacion"])
-        elif(calcular_mes(fecha_de_referencia) - calcular_mes(creador["fecha_ultima_publicacion"])>=0):
-            diccionario_fechas["anios"] = calcular_anio(fecha_de_referencia) - calcular_anio(creador["fecha_ultima_publicacion"])
-            diccionario_fechas["meses"] = calcular_mes(fecha_de_referencia) - calcular_mes(creador["fecha_ultima_publicacion"])
-        if(calcular_dia(fecha_de_referencia) - calcular_dia(creador["fecha_ultima_publicacion"]) < 0):
-            diccionario_fechas["meses"] -= 1
-            if(calcular_mes(fecha_de_referencia) != 1 or calcular_mes(fecha_de_referencia) != 3 or calcular_mes(fecha_de_referencia) != 5 or calcular_mes(fecha_de_referencia) != 7 or calcular_mes(fecha_de_referencia) != 8 or \
-                calcular_mes(fecha_de_referencia) != 10 or calcular_mes(fecha_de_referencia) != 12):
-                diccionario_fechas["dias"] = (31 - calcular_dia(creador["fecha_ultima_publicacion"]) + calcular_dia(fecha_de_referencia))
-            else:
-                diccionario_fechas["dias"] = (30 - calcular_dia(creador["fecha_ultima_publicacion"]) + calcular_dia(fecha_de_referencia))
-        elif (calcular_dia(fecha_de_referencia) - calcular_dia(creador["fecha_ultima_publicacion"]) >= 0):
-            diccionario_fechas["dias"] = calcular_dia(fecha_de_referencia) - calcular_dia(creador["fecha_ultima_publicacion"])
-    
-    
-    
-    return diccionario_fechas
-
-
-
-    
-
-    
-    
-    
-
-
+        diccionario_de_retorno = calcular_fecha_exacta(fecha_de_referencia, creador).copy()
+        
+    return diccionario_de_retorno

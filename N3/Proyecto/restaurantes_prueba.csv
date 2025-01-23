@@ -1,0 +1,14 @@
+name,category,rating,latitude,longitude,city,state,price,review_count,delivery,address
+Subway,Sandwich shop,4.2,37.3549757,-85.3264818,Campbellsville,Kentucky,`$$,8951,1,1602 E Broadway St
+Taco Bell,Fast food,3.4,34.179879,-93.0712665,Arkadelphia,Arkansas,$$`,6962,1,121 Valley Rd
+Pizza Hut,Pizza delivery,4.3,38.3720139,-97.6241374,McPherson,Kansas,`$$,4881,0,2215 E Kansas Ave
+IHOP,Breakfast,3.1,41.2505211,-75.8430915,Springfield,Massachusetts,$,616,0,770 Kidder St
+IHOP,Breakfast,3.4,35.7326496,-84.3912019,Lowell,Massachusetts,$$`,5200,0,12502 TN-72
+KFC,Chicken,3.7,35.2714408,-77.6034355,Kinston,North Carolina,`$$,9448,1,1613 W Vernon Ave
+Papa Johns Pizza,Pizza,3.2,34.7966715,-92.2555786,North Little Rock,Arkansas,$,2587,1,4612 JFK Blvd Ste 6
+Dunkin,Coffee shop,3.7,42.5854222,-71.777832,Fitchburg,Massachusetts,$$`,6100,1,580 John Fitch Hwy
+Los Pollos Hermanos,Chicken,4.8,35.0145774,-106.6875825,Albuquerque,New Mexico,$,9689,1,699 Susan Case ave
+Juan Valdez Café,Coffee shop,4.5,25.81239,-80.33069,Doral,Florida,`$$,7205,1,37 Hunter Spencer Ct
+Burger King,Fast food,3.1,46.829359,-100.8716328,Mandan,North Dakota,$,6494,0,1400 E Main St
+Dunkin,Coffee shop,3.6,42.4976361,-71.1257662,Woburn,Massachusetts,$$`,1469,1,344 Washington St
+Aziza,Moroccan,4.6,37.7804334,-122.481706,San Francisco,California,`$$,5068,1,5800 Geary Blvd
